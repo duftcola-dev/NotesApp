@@ -1,7 +1,6 @@
-from _typeshed import WriteableBuffer
 import json
 import os
-from types import resolve_bases
+
 class Driver:
 
     __instance=None
@@ -78,7 +77,16 @@ class Driver:
 
 
     def ClearDatbase(self)->bool:
-        pass
+        
+        root=self.__ReadFile()
+        root["ROOT"]={}
+        self.__WriteFile(root)
+        if self.__ReadFile()==True:
+            self.__Log(f"Database emptyed","info")
+            return True
+        else:
+            self.__Log(f"Cannot clear database, cannot access database","error")
+            return False
 
 
 
@@ -154,6 +162,9 @@ class Driver:
             self.__Log(f"ERR Not possible to check if item exists, cannot access database ","error")
             return -1
 
+        if root==True:#db empty
+            return False
+
         control_value=0
         result=root.get(item_id,control_value)
         
@@ -221,7 +232,6 @@ class Driver:
             return False
 
         return False
-
 
 
 

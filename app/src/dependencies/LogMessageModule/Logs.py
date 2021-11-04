@@ -92,9 +92,9 @@ class Logs(MetaLogMessage):
 
 #Use for inheritance of for debbugin inner class logic
 @CheckType
-def GetLogInstance(log_file_path=""):
+def GetLogInstance(log_file_path=None):
 
-    logs=Int_Logs(log_file=log_file_path)
+    logs=Int_Logs(log_file_path)
 
     return logs
 

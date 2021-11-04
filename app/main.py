@@ -2,7 +2,13 @@ from fastapi import FastAPI,HTTPException
 from src import interface
 
 app=FastAPI()
-interface.CheckConnection()
+
+@app.get("/note/connect",status_code=200)
+def CheckConnectionToDatabase():
+    result=interface.CheckConnection()
+    if result == False:
+        raise HTTPException(status_code=400, detail="Cannot access database")
+        
 
 @app.get("/note/",status_code=200)
 def GetNotesCollection():

@@ -23,12 +23,13 @@ app_models=Models()# database objects models
 
 
 def CheckConnection()->bool:
-
+    logs.LogMessage("info","Checking connection to database")
     return driver.CheckConnections()
 
 
 def SaveNote(content:str):
     
+    logs.LogMessage("info","Adding new item")
     note=app_models.GetNoteModel(content)
     id=note.GetId()
     result=driver.NewNote(note)
@@ -42,19 +43,23 @@ def SaveNote(content:str):
 
 def GetNote(note_id:str):
     
+    logs.LogMessage("info","Extracting item")
     return driver.GetNote(note_id)
 
 
 def GetNotes():
     
+    logs.LogMessage("info","Extracting collection")
     return driver.GetNotes()
 
 
 def DeleteNote(note_id:str):
 
+    logs.LogMessage("info","Deleting item")
     return driver.DeleteNote(note_id)
 
 
 def ClearDataBase():
     
+    logs.LogMessage("warning","Purging database")
     return driver.ClearDatbase()

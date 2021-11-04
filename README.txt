@@ -3,10 +3,10 @@ HOW TO USE THIS APP :
 Description: This is a backend application runnig in FastApi meant to store test files locally.
 
 Use:
-    In order to FastApi and Uvicorn need to be installed or be included in the virtual enviroment.
-    If such libararoes are no instaled use the requirements.txt file provided
+    In order to run this app FastApi and Uvicorn need to be installed or be included in the virtual environment.
+    If such libraries are no installed use the requirements.txt file provided.
 
-    In order to execute this app cd into app folder locally.
+    In order to execute this app cd into the NotesApp folder.
     Activate the virtual enviroment. 
     cd into /app
     Run in the console :

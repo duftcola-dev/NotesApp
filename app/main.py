@@ -2,7 +2,7 @@ from fastapi import FastAPI,HTTPException
 from src import interface
 
 app=FastAPI()
-
+interface.CheckConnection()
 
 @app.get("/note/",status_code=200)
 def GetNotesCollection():

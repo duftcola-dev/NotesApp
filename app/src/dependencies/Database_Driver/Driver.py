@@ -46,7 +46,7 @@ class Driver:
     def GetNotes(self)->dict:
         
         notes=self.__ReadFile()
-        if notes==False or notes == -1:
+        if notes==False:
             return False
 
         return notes
@@ -178,14 +178,17 @@ class Driver:
             return -1
 
         result=root.get(item_id)
-                  
+ 
+
         if result== None:
             self.__Log(f"Item not found : {item_id}","info")
             return False
-        
+
         if result["id"] == item_id:
             self.__Log(f"Item found : {item_id}","info")
-            return root
+            return root      
+
+
 
 
 

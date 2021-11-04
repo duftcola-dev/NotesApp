@@ -1,3 +1,4 @@
+from inspect import FullArgSpec
 import json
 import os
 
@@ -33,16 +34,24 @@ class Driver:
         if root == False or root == -1:
             return False
 
+        if root==None :
+            return False
+
         result=root.get(note_id)
         return result
         
 
 
+
     def GetNotes(self)->dict:
         
         notes=self.__ReadFile()
+        if notes==False or notes == -1:
+            return False
+
         return notes
     
+
 
 
     def DeleteNote(self,note_id)->dict:
@@ -56,19 +65,21 @@ class Driver:
         
         root=self.__ReadFile()
 
+        if root==False or root == -1:
+            return False
+
         new_note=note.GetNote()
         id=new_note["id"]
         root.update({id:new_note})
-
-        self.__WriteFile(root)
-        result=self.__ItemExists(id)
+        result=self.__WriteFile(root)
+        
         
         if result==False or result == -1:
 
             self.__Log(f"ERR Wasnt possible to update database , cannot complete operation","error")
             return False 
 
-        else :
+        if result==True :
 
             self.__Log(f"New note added {id}","info")
             return True
@@ -79,9 +90,12 @@ class Driver:
     def ClearDatbase(self)->bool:
         
         root=self.__ReadFile()
-        root["ROOT"]={}
+        root={}
         self.__WriteFile(root)
-        if self.__ReadFile()==True:
+        
+        result=self.__ReadFile()
+
+        if len(result)==0:
             self.__Log(f"Database emptyed","info")
             return True
         else:
@@ -92,6 +106,7 @@ class Driver:
 
 
     def __Delete(self,item_id:str)->bool:
+        
 
         result=self.__ItemExists(item_id)
 
@@ -162,18 +177,14 @@ class Driver:
             self.__Log(f"ERR Not possible to check if item exists, cannot access database ","error")
             return -1
 
-        if root==True:#db empty
-            return False
-
-        control_value=0
-        result=root.get(item_id,control_value)
-        
-        if result==control_value:
-            self.__Log(f"Item not found","info")
+        result=root.get(item_id)
+                  
+        if result== None:
+            self.__Log(f"Item not found : {item_id}","info")
             return False
         
-        else:
-            self.__Log(f"Item found","info")
+        if result["id"] == item_id:
+            self.__Log(f"Item found : {item_id}","info")
             return root
 
 
@@ -182,7 +193,10 @@ class Driver:
         
         try:
             file=open(self.__path,"w")
-            new_data=json.dumps(data)
+            new_data={
+            "ROOT":data
+            }
+            new_data=json.dumps(new_data,indent=4)
             file.write(new_data)
             file.close()
             return True
@@ -218,7 +232,7 @@ class Driver:
                     if len(root) == 0:
 
                         self.__Log(f"Database is currently empty ","info")
-                        return True
+                        return root
 
                     return root
             else:

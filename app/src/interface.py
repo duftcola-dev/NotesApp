@@ -29,13 +29,15 @@ def CheckConnection()->bool:
 
 def SaveNote(content:str):
     
-    note=app_models.GetNoteMode(content)
+    note=app_models.GetNoteModel(content)
     id=note.GetId()
     result=driver.NewNote(note)
     if result == True:
         logs.LogMessage("Database Updated","info")
-    
-    return result,id
+    else:
+        return False
+        
+    return id
 
 
 def GetNote(note_id:str):

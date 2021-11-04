@@ -24,8 +24,8 @@ class Logs():
         if message_type in self.__type:
             
             date=self.__GetDate()
-
-            self.__message=date+" | "+message_type+" | "+message+"\n"
+            self.__message=""
+            self.__message=self.__message+date+" | "+message_type+" | "+message+"\n"
             sys.stdout.write(self.__message)
 
             if self.__path != None:
